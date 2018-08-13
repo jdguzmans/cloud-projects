@@ -1,0 +1,13 @@
+# import Event from './generated/prisma.graphql'
+# import User from './generated/prisma.graphql'
+
+
+type Query {
+  events: [Event!]!
+}
+
+type Mutation {
+  createEvent(authorId: ID!, title: String!, content: String!): Event
+  deleteEvent(id: ID!): Event
+  signup(email: String!): User!
+}

@@ -1,0 +1,14 @@
+{
+  "name": "0-backend",
+  "version": "1.0.0",
+  "description": "Cloud project 0 backend",
+  "author": "Juan David Guzmán S. jdguzmans@hotmail.com",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.16.0",
+    "prisma-binding": "^2.1.4"
+  }
+}
