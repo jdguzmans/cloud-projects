@@ -9,5 +9,6 @@ type Query {
 type Mutation {
   createEvent(authorId: ID!, title: String!, content: String!): Event
   deleteEvent(id: ID!): Event
-  signup(email: String!): User!
+  signup(email: String!, password: String!): String!
+  signin(email: String!, password: String!): String!
 }

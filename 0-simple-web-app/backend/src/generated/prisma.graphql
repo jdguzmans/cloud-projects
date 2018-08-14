@@ -1,7 +1,11 @@
 # source: http://localhost:4466
-# timestamp: Sat Aug 11 2018 19:12:25 GMT-0500 (-05)
+# timestamp: Mon Aug 13 2018 23:14:59 GMT-0500 (-05)
 
 type AggregateEvent {
+  count: Int!
+}
+
+type AggregateEventCategory {
   count: Int!
 }
 
@@ -16,9 +20,215 @@ type BatchPayload {
 
 type Event implements Node {
   id: ID!
+  category(where: EventCategoryWhereInput): EventCategory!
+  user(where: UserWhereInput): User!
   place: String!
   address: String!
-  author(where: UserWhereInput): User!
+}
+
+type EventCategory implements Node {
+  id: ID!
+  name: String!
+}
+
+"""A connection to a list of items."""
+type EventCategoryConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [EventCategoryEdge]!
+  aggregate: AggregateEventCategory!
+}
+
+input EventCategoryCreateInput {
+  name: String!
+}
+
+input EventCategoryCreateOneInput {
+  create: EventCategoryCreateInput
+  connect: EventCategoryWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type EventCategoryEdge {
+  """The item at the end of the edge."""
+  node: EventCategory!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum EventCategoryOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type EventCategoryPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type EventCategorySubscriptionPayload {
+  mutation: MutationType!
+  node: EventCategory
+  updatedFields: [String!]
+  previousValues: EventCategoryPreviousValues
+}
+
+input EventCategorySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EventCategorySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EventCategorySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EventCategorySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: EventCategoryWhereInput
+}
+
+input EventCategoryUpdateDataInput {
+  name: String
+}
+
+input EventCategoryUpdateInput {
+  name: String
+}
+
+input EventCategoryUpdateOneInput {
+  create: EventCategoryCreateInput
+  connect: EventCategoryWhereUniqueInput
+  delete: Boolean
+  update: EventCategoryUpdateDataInput
+  upsert: EventCategoryUpsertNestedInput
+}
+
+input EventCategoryUpsertNestedInput {
+  update: EventCategoryUpdateDataInput!
+  create: EventCategoryCreateInput!
+}
+
+input EventCategoryWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EventCategoryWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EventCategoryWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EventCategoryWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+input EventCategoryWhereUniqueInput {
+  id: ID
+  name: String
 }
 
 """A connection to a list of items."""
@@ -34,17 +244,19 @@ type EventConnection {
 input EventCreateInput {
   place: String!
   address: String!
-  author: UserCreateOneWithoutEventsInput!
+  category: EventCategoryCreateOneInput!
+  user: UserCreateOneWithoutEventsInput!
 }
 
-input EventCreateManyWithoutAuthorInput {
-  create: [EventCreateWithoutAuthorInput!]
+input EventCreateManyWithoutUserInput {
+  create: [EventCreateWithoutUserInput!]
   connect: [EventWhereUniqueInput!]
 }
 
-input EventCreateWithoutAuthorInput {
+input EventCreateWithoutUserInput {
   place: String!
   address: String!
+  category: EventCategoryCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -117,32 +329,34 @@ input EventSubscriptionWhereInput {
 input EventUpdateInput {
   place: String
   address: String
-  author: UserUpdateOneWithoutEventsInput
+  category: EventCategoryUpdateOneInput
+  user: UserUpdateOneWithoutEventsInput
 }
 
-input EventUpdateManyWithoutAuthorInput {
-  create: [EventCreateWithoutAuthorInput!]
+input EventUpdateManyWithoutUserInput {
+  create: [EventCreateWithoutUserInput!]
   connect: [EventWhereUniqueInput!]
   disconnect: [EventWhereUniqueInput!]
   delete: [EventWhereUniqueInput!]
-  update: [EventUpdateWithWhereUniqueWithoutAuthorInput!]
-  upsert: [EventUpsertWithWhereUniqueWithoutAuthorInput!]
+  update: [EventUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [EventUpsertWithWhereUniqueWithoutUserInput!]
 }
 
-input EventUpdateWithoutAuthorDataInput {
+input EventUpdateWithoutUserDataInput {
   place: String
   address: String
+  category: EventCategoryUpdateOneInput
 }
 
-input EventUpdateWithWhereUniqueWithoutAuthorInput {
+input EventUpdateWithWhereUniqueWithoutUserInput {
   where: EventWhereUniqueInput!
-  data: EventUpdateWithoutAuthorDataInput!
+  data: EventUpdateWithoutUserDataInput!
 }
 
-input EventUpsertWithWhereUniqueWithoutAuthorInput {
+input EventUpsertWithWhereUniqueWithoutUserInput {
   where: EventWhereUniqueInput!
-  update: EventUpdateWithoutAuthorDataInput!
-  create: EventCreateWithoutAuthorInput!
+  update: EventUpdateWithoutUserDataInput!
+  create: EventCreateWithoutUserInput!
 }
 
 input EventWhereInput {
@@ -274,7 +488,8 @@ input EventWhereInput {
 
   """All values not ending with the given string."""
   address_not_ends_with: String
-  author: UserWhereInput
+  category: EventCategoryWhereInput
+  user: UserWhereInput
 }
 
 input EventWhereUniqueInput {
@@ -290,16 +505,22 @@ scalar Long
 type Mutation {
   createUser(data: UserCreateInput!): User!
   createEvent(data: EventCreateInput!): Event!
+  createEventCategory(data: EventCategoryCreateInput!): EventCategory!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
+  updateEventCategory(data: EventCategoryUpdateInput!, where: EventCategoryWhereUniqueInput!): EventCategory
   deleteUser(where: UserWhereUniqueInput!): User
   deleteEvent(where: EventWhereUniqueInput!): Event
+  deleteEventCategory(where: EventCategoryWhereUniqueInput!): EventCategory
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
+  upsertEventCategory(where: EventCategoryWhereUniqueInput!, create: EventCategoryCreateInput!, update: EventCategoryUpdateInput!): EventCategory!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyEvents(data: EventUpdateInput!, where: EventWhereInput): BatchPayload!
+  updateManyEventCategories(data: EventCategoryUpdateInput!, where: EventCategoryWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyEvents(where: EventWhereInput): BatchPayload!
+  deleteManyEventCategories(where: EventCategoryWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -332,10 +553,13 @@ type PageInfo {
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
+  eventCategories(where: EventCategoryWhereInput, orderBy: EventCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EventCategory]!
   user(where: UserWhereUniqueInput!): User
   event(where: EventWhereUniqueInput!): Event
+  eventCategory(where: EventCategoryWhereUniqueInput!): EventCategory
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
+  eventCategoriesConnection(where: EventCategoryWhereInput, orderBy: EventCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventCategoryConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -347,11 +571,14 @@ type Query {
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
+  eventCategory(where: EventCategorySubscriptionWhereInput): EventCategorySubscriptionPayload
 }
 
 type User implements Node {
   id: ID!
   email: String!
+  hash: String!
+  salt: String!
   events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
 }
 
@@ -367,7 +594,9 @@ type UserConnection {
 
 input UserCreateInput {
   email: String!
-  events: EventCreateManyWithoutAuthorInput
+  hash: String!
+  salt: String!
+  events: EventCreateManyWithoutUserInput
 }
 
 input UserCreateOneWithoutEventsInput {
@@ -377,6 +606,8 @@ input UserCreateOneWithoutEventsInput {
 
 input UserCreateWithoutEventsInput {
   email: String!
+  hash: String!
+  salt: String!
 }
 
 """An edge in a connection."""
@@ -393,6 +624,10 @@ enum UserOrderByInput {
   id_DESC
   email_ASC
   email_DESC
+  hash_ASC
+  hash_DESC
+  salt_ASC
+  salt_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -402,6 +637,8 @@ enum UserOrderByInput {
 type UserPreviousValues {
   id: ID!
   email: String!
+  hash: String!
+  salt: String!
 }
 
 type UserSubscriptionPayload {
@@ -445,7 +682,9 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   email: String
-  events: EventUpdateManyWithoutAuthorInput
+  hash: String
+  salt: String
+  events: EventUpdateManyWithoutUserInput
 }
 
 input UserUpdateOneWithoutEventsInput {
@@ -458,6 +697,8 @@ input UserUpdateOneWithoutEventsInput {
 
 input UserUpdateWithoutEventsDataInput {
   email: String
+  hash: String
+  salt: String
 }
 
 input UserUpsertWithoutEventsInput {
@@ -554,6 +795,86 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   email_not_ends_with: String
+  hash: String
+
+  """All values that are not equal to given value."""
+  hash_not: String
+
+  """All values that are contained in given list."""
+  hash_in: [String!]
+
+  """All values that are not contained in given list."""
+  hash_not_in: [String!]
+
+  """All values less than the given value."""
+  hash_lt: String
+
+  """All values less than or equal the given value."""
+  hash_lte: String
+
+  """All values greater than the given value."""
+  hash_gt: String
+
+  """All values greater than or equal the given value."""
+  hash_gte: String
+
+  """All values containing the given string."""
+  hash_contains: String
+
+  """All values not containing the given string."""
+  hash_not_contains: String
+
+  """All values starting with the given string."""
+  hash_starts_with: String
+
+  """All values not starting with the given string."""
+  hash_not_starts_with: String
+
+  """All values ending with the given string."""
+  hash_ends_with: String
+
+  """All values not ending with the given string."""
+  hash_not_ends_with: String
+  salt: String
+
+  """All values that are not equal to given value."""
+  salt_not: String
+
+  """All values that are contained in given list."""
+  salt_in: [String!]
+
+  """All values that are not contained in given list."""
+  salt_not_in: [String!]
+
+  """All values less than the given value."""
+  salt_lt: String
+
+  """All values less than or equal the given value."""
+  salt_lte: String
+
+  """All values greater than the given value."""
+  salt_gt: String
+
+  """All values greater than or equal the given value."""
+  salt_gte: String
+
+  """All values containing the given string."""
+  salt_contains: String
+
+  """All values not containing the given string."""
+  salt_not_contains: String
+
+  """All values starting with the given string."""
+  salt_starts_with: String
+
+  """All values not starting with the given string."""
+  salt_not_starts_with: String
+
+  """All values ending with the given string."""
+  salt_ends_with: String
+
+  """All values not ending with the given string."""
+  salt_not_ends_with: String
   events_every: EventWhereInput
   events_some: EventWhereInput
   events_none: EventWhereInput

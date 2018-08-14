@@ -8,7 +8,10 @@
     "dev": "nodemon src/index.js"
   },
   "dependencies": {
+    "crypto": "^1.0.1",
+    "dotenv": "^6.0.0",
     "graphql-yoga": "^1.16.0",
+    "jsonwebtoken": "^8.3.0",
     "prisma-binding": "^2.1.4"
   }
 }

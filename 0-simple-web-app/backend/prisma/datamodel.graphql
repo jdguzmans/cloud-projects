@@ -1,6 +1,8 @@
 type User {
   id: ID! @unique
-  email: String! @unique
+  email: String! @unique,
+  hash: String!,
+  salt: String!,
   events: [Event!]!
 }
 
