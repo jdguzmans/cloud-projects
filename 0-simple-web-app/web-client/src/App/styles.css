@@ -1,0 +1,9 @@
+html {
+    overflow-y: scroll;
+}
+
+html, body {
+    font-family: 'Exo', sans-serif;
+    margin: 0em;
+    padding: 0em;
+}
