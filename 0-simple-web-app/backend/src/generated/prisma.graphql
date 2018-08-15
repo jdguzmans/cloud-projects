@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Mon Aug 13 2018 23:14:59 GMT-0500 (-05)
+# timestamp: Wed Aug 15 2018 00:46:46 GMT-0500 (-05)
 
 type AggregateEvent {
   count: Int!
@@ -24,11 +24,15 @@ type Event implements Node {
   user(where: UserWhereInput): User!
   place: String!
   address: String!
+  startDate: Int!
+  finishDate: Int!
+  isVirtual: Boolean!
 }
 
 type EventCategory implements Node {
   id: ID!
   name: String!
+  color: String!
 }
 
 """A connection to a list of items."""
@@ -43,6 +47,7 @@ type EventCategoryConnection {
 
 input EventCategoryCreateInput {
   name: String!
+  color: String!
 }
 
 input EventCategoryCreateOneInput {
@@ -64,6 +69,8 @@ enum EventCategoryOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  color_ASC
+  color_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -73,6 +80,7 @@ enum EventCategoryOrderByInput {
 type EventCategoryPreviousValues {
   id: ID!
   name: String!
+  color: String!
 }
 
 type EventCategorySubscriptionPayload {
@@ -116,10 +124,12 @@ input EventCategorySubscriptionWhereInput {
 
 input EventCategoryUpdateDataInput {
   name: String
+  color: String
 }
 
 input EventCategoryUpdateInput {
   name: String
+  color: String
 }
 
 input EventCategoryUpdateOneInput {
@@ -224,11 +234,52 @@ input EventCategoryWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  color: String
+
+  """All values that are not equal to given value."""
+  color_not: String
+
+  """All values that are contained in given list."""
+  color_in: [String!]
+
+  """All values that are not contained in given list."""
+  color_not_in: [String!]
+
+  """All values less than the given value."""
+  color_lt: String
+
+  """All values less than or equal the given value."""
+  color_lte: String
+
+  """All values greater than the given value."""
+  color_gt: String
+
+  """All values greater than or equal the given value."""
+  color_gte: String
+
+  """All values containing the given string."""
+  color_contains: String
+
+  """All values not containing the given string."""
+  color_not_contains: String
+
+  """All values starting with the given string."""
+  color_starts_with: String
+
+  """All values not starting with the given string."""
+  color_not_starts_with: String
+
+  """All values ending with the given string."""
+  color_ends_with: String
+
+  """All values not ending with the given string."""
+  color_not_ends_with: String
 }
 
 input EventCategoryWhereUniqueInput {
   id: ID
   name: String
+  color: String
 }
 
 """A connection to a list of items."""
@@ -244,6 +295,9 @@ type EventConnection {
 input EventCreateInput {
   place: String!
   address: String!
+  startDate: Int!
+  finishDate: Int!
+  isVirtual: Boolean!
   category: EventCategoryCreateOneInput!
   user: UserCreateOneWithoutEventsInput!
 }
@@ -256,6 +310,9 @@ input EventCreateManyWithoutUserInput {
 input EventCreateWithoutUserInput {
   place: String!
   address: String!
+  startDate: Int!
+  finishDate: Int!
+  isVirtual: Boolean!
   category: EventCategoryCreateOneInput!
 }
 
@@ -275,6 +332,12 @@ enum EventOrderByInput {
   place_DESC
   address_ASC
   address_DESC
+  startDate_ASC
+  startDate_DESC
+  finishDate_ASC
+  finishDate_DESC
+  isVirtual_ASC
+  isVirtual_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -285,6 +348,9 @@ type EventPreviousValues {
   id: ID!
   place: String!
   address: String!
+  startDate: Int!
+  finishDate: Int!
+  isVirtual: Boolean!
 }
 
 type EventSubscriptionPayload {
@@ -329,6 +395,9 @@ input EventSubscriptionWhereInput {
 input EventUpdateInput {
   place: String
   address: String
+  startDate: Int
+  finishDate: Int
+  isVirtual: Boolean
   category: EventCategoryUpdateOneInput
   user: UserUpdateOneWithoutEventsInput
 }
@@ -345,6 +414,9 @@ input EventUpdateManyWithoutUserInput {
 input EventUpdateWithoutUserDataInput {
   place: String
   address: String
+  startDate: Int
+  finishDate: Int
+  isVirtual: Boolean
   category: EventCategoryUpdateOneInput
 }
 
@@ -488,6 +560,54 @@ input EventWhereInput {
 
   """All values not ending with the given string."""
   address_not_ends_with: String
+  startDate: Int
+
+  """All values that are not equal to given value."""
+  startDate_not: Int
+
+  """All values that are contained in given list."""
+  startDate_in: [Int!]
+
+  """All values that are not contained in given list."""
+  startDate_not_in: [Int!]
+
+  """All values less than the given value."""
+  startDate_lt: Int
+
+  """All values less than or equal the given value."""
+  startDate_lte: Int
+
+  """All values greater than the given value."""
+  startDate_gt: Int
+
+  """All values greater than or equal the given value."""
+  startDate_gte: Int
+  finishDate: Int
+
+  """All values that are not equal to given value."""
+  finishDate_not: Int
+
+  """All values that are contained in given list."""
+  finishDate_in: [Int!]
+
+  """All values that are not contained in given list."""
+  finishDate_not_in: [Int!]
+
+  """All values less than the given value."""
+  finishDate_lt: Int
+
+  """All values less than or equal the given value."""
+  finishDate_lte: Int
+
+  """All values greater than the given value."""
+  finishDate_gt: Int
+
+  """All values greater than or equal the given value."""
+  finishDate_gte: Int
+  isVirtual: Boolean
+
+  """All values that are not equal to given value."""
+  isVirtual_not: Boolean
   category: EventCategoryWhereInput
   user: UserWhereInput
 }

@@ -1,14 +1,15 @@
 # import Event from './generated/prisma.graphql'
 # import User from './generated/prisma.graphql'
-
+# import EventCategory from './generated/prisma.graphql'
 
 type Query {
-  events: [Event!]!
+  events: [Event!]!,
+  eventCategories: [EventCategory!]!
 }
 
 type Mutation {
-  createEvent(authorId: ID!, title: String!, content: String!): Event
-  deleteEvent(id: ID!): Event
+  createEvent(authorId: ID!, categoryId: ID!, place: String!, address: String!, startDate: Int!, finishDate: Int!, isVirtual: Boolean!): Boolean
+  deleteEvent(id: ID!): Boolean
   signup(email: String!, password: String!): String!
   signin(email: String!, password: String!): String!
 }

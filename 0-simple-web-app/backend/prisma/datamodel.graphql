@@ -12,9 +12,13 @@ type Event {
   user: User!
   place: String!
   address: String!
+  startDate: Int!
+  finishDate: Int!
+  isVirtual: Boolean!
 }
 
 type EventCategory {
   id: ID! @unique
   name: String! @unique
+  color: String! @unique
 }
