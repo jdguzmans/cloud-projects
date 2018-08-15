@@ -5,7 +5,8 @@
   "author": "Juan David Guzmán S. jdguzmans@hotmail.com",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "DEV=1 nodemon src/index.js",
+    "deploy": "pm2 kill && pm2 start src/index.js"
   },
   "dependencies": {
     "crypto": "^1.0.1",

@@ -5,6 +5,8 @@ const { Prisma } = require('prisma-binding')
 const security = require('./functions/security')
 const resolvers = require('./resolvers')
 
+const { PRISMA_URL, BACKEND_PORT } = require('./config')
+
 const server = new GraphQLServer({
   typeDefs: 'src/schema.graphql',
   resolvers,
@@ -21,12 +23,12 @@ const server = new GraphQLServer({
       ...req,
       prisma: new Prisma({
         typeDefs: 'src/generated/prisma.graphql',
-        endpoint: process.env.PRISMA_URL
+        endpoint: PRISMA_URL
       })
     }
   }
 })
 
-server.start({port: process.env.BACKEND_PORT}, ({port}) =>
+server.start({port: BACKEND_PORT}, ({port}) =>
   console.log('GraphQL server is running on port ' + port)
 )
