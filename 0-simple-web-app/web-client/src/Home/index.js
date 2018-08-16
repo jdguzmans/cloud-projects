@@ -8,6 +8,7 @@ import {
 } from './styles'
 import Loading from '../Loading/index.js'
 import QUERY from './queries'
+import Events from '../Events/index.js'
 
 const enhance = compose(
   withState('isLoading', 'setLoading', false)
@@ -19,9 +20,10 @@ const Home = enhance(({ isLoading }) => {
       {({ loading, error, data }) => {
         if (loading) return <Loading />
         else {
+          const { eventCategories } = data
           return (
             <Main>
-                S
+              <Events categories={eventCategories} />
             </Main>
           )
         }

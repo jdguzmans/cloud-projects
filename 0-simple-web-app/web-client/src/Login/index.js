@@ -8,6 +8,7 @@ import { TOKEN_KEY } from '../config'
 
 import Loading from '../Loading/index.js'
 import { SIGNIN, SIGNUP } from './mutations'
+import { IS_LOGGED_IN } from './queries'
 
 import {
   Main,
@@ -48,10 +49,19 @@ const enhance = compose(
     }
   }),
   lifecycle({
-    componentDidMount () {
+    async componentDidMount () {
       const token = localStorage.getItem(TOKEN_KEY)
-      if (token) this.props.history.replace('home')
-      else this.props.setLoading(false)
+      if (!token) this.props.setLoading(false)
+      else {
+        const { data } = await this.props.client.query({
+          query: IS_LOGGED_IN
+        })
+        if (data.isLoggedIn) this.props.history.replace('home')
+        else {
+          localStorage.clear()
+          this.props.setLoading(false)
+        }
+      }
     }
   })
 )

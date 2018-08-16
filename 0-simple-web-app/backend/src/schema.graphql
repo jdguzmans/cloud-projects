@@ -3,12 +3,14 @@
 # import EventCategory from './generated/prisma.graphql'
 
 type Query {
-  events: [Event!]!,
+  events: [Event!]!
   eventCategories: [EventCategory!]!
+  isLoggedIn: Boolean!
 }
 
 type Mutation {
   createEvent(authorId: ID!, categoryId: ID!, place: String!, address: String!, startDate: Int!, finishDate: Int!, isVirtual: Boolean!): Boolean
+  editEvent(id: ID!, categoryId: ID!, place: String!, address: String!, startDate: Int!, finishDate: Int!, isVirtual: Boolean!): Boolean
   deleteEvent(id: ID!): Boolean
   signup(email: String!, password: String!): String!
   signin(email: String!, password: String!): String!

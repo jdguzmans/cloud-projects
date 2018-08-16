@@ -4,9 +4,8 @@ export default gql`
   query {
     eventCategories {
       id
-    }
-    events {
-      id
+      name
+      color
     }
   }
 `

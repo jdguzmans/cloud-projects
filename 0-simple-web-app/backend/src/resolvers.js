@@ -16,12 +16,18 @@ const resolvers = {
             id: user.id
           }
         }
-      })
+      }, info)
     },
     eventCategories: (_, args, context, info) => {
       const { user } = context
       if (!user) throw new Error(UNAUTHORIZED)
       return context.prisma.query.eventCategories({})
+    },
+    isLoggedIn: (_args, context, info) => {
+      const { user } = context
+      let ans = false
+      if (user) ans = true
+      return ans
     }
   },
   Mutation: {
@@ -52,6 +58,44 @@ const resolvers = {
             isVirtual: isVirtual
           }
         })
+      }
+    },
+    editEvent: async (_, args, context, info) => {
+      const { user } = context
+      const { id, categoryId, place, address, startDate, finishDate, isVirtual } = args
+      const eventCategory = await context.prisma.query.eventCategory({
+        where: {id: categoryId}
+      })
+      if (!eventCategory) throw new Error(DOES_NOT_EXIST_CATEGORY)
+      else {
+        const events = await context.prisma.query.events({
+          where: {
+            id: id,
+            user: {
+              id: user.id
+            }
+          }
+        })
+        if (events.length === 0) throw new Error(UNAUTHORIZED)
+        else {
+          return context.prisma.mutation.updateEvent({
+            where: {
+              id: id
+            },
+            data: {
+              category: {
+                connect: {
+                  id: categoryId
+                }
+              },
+              place: place,
+              address: address,
+              startDate: startDate,
+              finishDate: finishDate,
+              isVirtual: isVirtual
+            }
+          })
+        }
       }
     },
     deleteEvent: async (_, args, context, info) => {
