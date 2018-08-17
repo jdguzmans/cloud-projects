@@ -8,6 +8,7 @@ import { BACKEND_URL, TOKEN_KEY } from '../config'
 
 import Login from '../Login/index.js'
 import Home from '../Home/index.js'
+import Eventt from '../EventDetail/index.js'
 
 import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
@@ -43,6 +44,8 @@ class App extends Component {
           <div>
             <Route exact path='/' component={Login} />
             <Route path='/home' component={Home} />
+            <Route path='/event' component={Eventt} />
+            <Route path='/event/:eventId' component={Eventt} />
           </div>
         </Router>
       </ApolloProvider>

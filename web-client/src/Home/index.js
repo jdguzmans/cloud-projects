@@ -2,10 +2,12 @@
 
 import * as React from 'react'
 import { compose, withState, withHandlers } from 'recompose'
+import { withRouter } from 'react-router'
+
 import {
   Main,
   Session,
-  Boton
+  Button
 } from './styles'
 import Events from '../Events/index.js'
 import Categories from '../Categories/index.js'
@@ -18,10 +20,11 @@ const enhance = compose(
       localStorage.clear()
       history.replace('/')
     }
-  })
+  }),
+  withRouter
 )
 
-const Home = enhance(({ isLoading, logout }) => {
+const Home = enhance(({ isLoading, logout, history }) => {
   return (
     <Main>
       <Session
@@ -30,7 +33,10 @@ const Home = enhance(({ isLoading, logout }) => {
         }}
       >logout</Session>
       <Events />
-      <Boton>+</Boton>
+      <Button onClick={(e) => {
+        e.preventDefault()
+        history.push('/event')
+      }} >Agregar</Button>
       <Categories />
     </Main>
   )

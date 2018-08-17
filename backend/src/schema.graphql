@@ -4,6 +4,7 @@
 
 type Query {
   events: [Event!]!
+  event(eventId: ID): Event
   eventCategories: [EventCategory!]!
   isLoggedIn: Boolean!
 }

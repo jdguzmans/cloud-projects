@@ -18,6 +18,22 @@ const resolvers = {
         }
       }, info)
     },
+    event: (_, args, context, info) => {
+      const { user } = context
+      const { eventId } = args
+
+      if (!user) throw new Error(UNAUTHORIZED)
+      else {
+        return context.prisma.query.events({
+          where: {
+            id: eventId,
+            user: {
+              id: user.id
+            }
+          }
+        }, info)[0]
+      }
+    },
     eventCategories: (_, args, context, info) => {
       const { user } = context
       if (!user) throw new Error(UNAUTHORIZED)

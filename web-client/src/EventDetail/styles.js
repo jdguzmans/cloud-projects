@@ -1,4 +1,3 @@
-
 import styled from 'styled-components'
 
 export const Main = styled.div`
@@ -10,7 +9,49 @@ export const Main = styled.div`
   height: 100vh;
   position: relative;
 `
-
+export const FirstFormWrap = styled.div`
+justify-content: center;
+  align-items: center;
+  flex-flow: column nowrap;
+  width: 100%;
+  transition: opacity 0.3s linear;
+  display: none;
+  opacity: 0;
+  z-index: -1;
+  min-width: auto;
+  min-height: auto;
+`
+export const InputContent = styled.input`
+  width: 85%;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  background: rgb(220, 220, 220);
+  border: none;
+  margin: 0.5rem 0;
+  transition: all 0.3s;
+  -webkit-appearance: none;
+  `
+export const SelectItem = styled.select`
+  margin: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #000;
+  opacity: ${props => (props.focussing ? '1' : '0.5')};
+  width: 100%;
+  border: none;
+  outline: none;
+  display: inline-block;
+  appearance: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+  &:hover {
+    opacity: 0.75;
+  }
+  &:focus {
+    opacity: 1;
+  }
+`
 export const Form = styled.form.attrs({
   className: 'animated fadeInUp'
 })`
@@ -46,7 +87,7 @@ export const Input = styled.input`
   }
 `
 
-export const LoginButton = styled.button`
+export const SubmitButton = styled.button`
   background-color: blue;
   color: blue;
   margin-top: 20px;
@@ -62,7 +103,7 @@ export const LoginButton = styled.button`
   }
 `
 
-export const SignupButton = styled.button`
+export const CancelButton = styled.button`
   background-color: red;
   color: blue;
   margin-top: 20px;

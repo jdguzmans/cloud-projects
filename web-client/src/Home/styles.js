@@ -21,7 +21,7 @@ height: 23px;
 color:white;
 margin:20px
 `
-export const Boton = styled.a`
+export const Button = styled.button`
   width:30px;
   height:30px;
   background-color:#5cd163;
