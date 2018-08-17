@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export const Main = styled.div`
   display: flex;
-  background: green;
+  background: #1a63ff;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
@@ -11,69 +11,36 @@ export const Main = styled.div`
   position: relative;
 `
 
-export const Form = styled.form.attrs({
-  className: 'animated fadeInUp'
-})`
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  background-color: white;
-  padding: 20px 30px;
-  margin-top: 30px;
-  width: 90%;
-  max-width: 400px;
-  border-radius: 5px;
+export const Session = styled.button`
+position: fixed;
+top: 0;
+left: 0;
+z-index: 999;
+width: 100%;
+height: 23px;
+color:white;
+margin:20px
 `
-
-export const Input = styled.input`
-  && {
-    background: white;
-    min-height: 40px;
-    border-radius: 4px;
-
-    > div {
-      &::after {
-        background-color: green;
-      }
-
-      input {
-        text-align: center;
-        padding: 12px 30px;
-        color: green;
-        transition: all 0.3s;
-      }
-    }
-  }
-`
-
-export const LoginButton = styled.button`
-  background-color: blue;
-  color: blue;
-  margin-top: 20px;
-  padding: 10px 30px;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
-  &:hover {
-    background-color: green;
-  }
-`
-
-export const SignupButton = styled.button`
-  background-color: red;
-  color: blue;
-  margin-top: 20px;
-  padding: 10px 30px;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
-  &:hover {
-    background-color: green;
-  }
+export const Boton = styled.a`
+  width:30px;
+  height:30px;
+  background-color:#5cd163;
+  margin: 25px;
+  padding:10px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+  font-size:11px;
+  line-height:32px;
+  text-transform: uppercase;
+  float:left;
+  color:white;
+  font-size:xx-large;
+  text-align: center;
+}
+.boton:hover{
+  opacity: 0.50;
+  -moz-opacity: .50;
+  filter:alpha (opacity=50);
+}
 `

@@ -1,34 +1,38 @@
-/* global */
+/* global localStorage */
 
 import * as React from 'react'
-import { compose, withState } from 'recompose'
-import { Query } from 'react-apollo'
+import { compose, withState, withHandlers } from 'recompose'
 import {
-  Main
+  Main,
+  Session,
+  Boton
 } from './styles'
-import Loading from '../Loading/index.js'
-import QUERY from './queries'
 import Events from '../Events/index.js'
+import Categories from '../Categories/index.js'
 
 const enhance = compose(
-  withState('isLoading', 'setLoading', false)
+  withState('isLoading', 'setLoading', false),
+  withHandlers({
+    logout: ({ setLoading, client, history }) => async () => {
+      setLoading(true)
+      localStorage.clear()
+      history.replace('/')
+    }
+  })
 )
 
-const Home = enhance(({ isLoading }) => {
+const Home = enhance(({ isLoading, logout }) => {
   return (
-    <Query query={QUERY} >
-      {({ loading, error, data }) => {
-        if (loading) return <Loading />
-        else {
-          const { eventCategories } = data
-          return (
-            <Main>
-              <Events categories={eventCategories} />
-            </Main>
-          )
-        }
-      }}
-    </Query>
+    <Main>
+      <Session
+        onClick={(e) => {
+          logout()
+        }}
+      >logout</Session>
+      <Events />
+      <Boton>+</Boton>
+      <Categories />
+    </Main>
   )
 })
 

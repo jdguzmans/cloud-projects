@@ -4,7 +4,8 @@ import * as React from 'react'
 import { compose } from 'recompose'
 
 import {
-  Main
+  Main,
+  Pad
 } from './styles'
 
 const parseDate = (dateNumber) => {
@@ -27,11 +28,17 @@ const enhance = compose()
 const Event = enhance(props => {
   const { event } = props
   const { place, address, startDate, finishDate, isVirtual } = event
+  console.log(event)
   return (
     <Main>
-      {place}
-      {address}
-      {parseDate(startDate)}
+      <Pad>{place}  {address}</Pad>
+      
+      <br />
+      <Pad>start: {parseDate(startDate)}</Pad>
+      <Pad>End: {parseDate(finishDate)}</Pad>
+      <Pad>{isVirtual}</Pad>
+      <br />
+      <Pad style={{color:'#'+event.category.color}}>{event.category.name}</Pad>
     </Main>
   )
 })

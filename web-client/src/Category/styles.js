@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Main = styled.a`
+export const Main = styled.div`
   display: flex;
   border-bottom: 1px solid #e2e2e2;
   background-color: white;
@@ -10,9 +10,8 @@ export const Main = styled.a`
   border-radius: 4px;
   min-width: 20%;
   max-width: 20%;
-  min-height: 140px;
-  max-height: 140px;
-  margin: 3px;
+  min-height: 15px;
+  max-height: 15px;
   overflow: hidden;
   align-items: center;
   flex: 1 1 0;
